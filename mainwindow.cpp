@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+//    sdfgodfjogdfio;gdfo;
 
 
     this->ui->tableView->setModel(model);
