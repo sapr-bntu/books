@@ -17,9 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     createConnection();
     model= new QSqlTableModel (this);    
-    model->setTable("books");
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->select();
+//    model->setTable("books");
+    model->setQuery("SELECT * FROM books");
+//    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+//    model->select();
+//    model->
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
     model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -108,7 +110,7 @@ void MainWindow::on_pushButton_clicked()
 
 
 
-    model->setTable("books");
+//    model->setTable("books");
 
     QSqlQuery query;
     query.exec(result);
@@ -136,8 +138,9 @@ void MainWindow::on_pushButton_pressed()
 void MainWindow::on_pushButton_4_clicked()
 {
 
-    model->setTable("books");
-    model->select();
+//    model->setTable("books");
+//    model->select();
+    model->setQuery("SELECT * FROM books");
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
     model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -170,7 +173,7 @@ void MainWindow::on_pushButton_3_clicked()
     query.exec(result);
     model->setQuery(query);
 
-    model->select();
+//    model->select();
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
     model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -206,8 +209,9 @@ QString del="",result="";
 
    model->setQuery(query);
    model->submit();
-   model->setTable("books");
-   model->select();
+   model->setQuery("SELECT * FROM books");
+//   model->setTable("books");
+//   model->select();
 
    model->setHeaderData(0, Qt::Horizontal, tr("Id"));
    model->setHeaderData(1, Qt::Horizontal, tr("Title"));

@@ -18,7 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QSqlTableModel *model;
+    QSqlQueryModel *model;
 
 
 private slots:
