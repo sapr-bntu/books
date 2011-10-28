@@ -17,11 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     createConnection();
     model= new QSqlTableModel (this);    
-//    model->setTable("books");
+    //model->setTable("books");
+   // model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    //model->select();
     model->setQuery("SELECT * FROM books");
-//    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//    model->select();
-//    model->
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
     model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -32,7 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     this->ui->tableView->setModel(model);
+
 }
+
+
+
+
+
 
 MainWindow::~MainWindow()
 {
@@ -110,7 +115,7 @@ void MainWindow::on_pushButton_clicked()
 
 
 
-//    model->setTable("books");
+   model->setQuery("SELECT * FROM books");
 
     QSqlQuery query;
     query.exec(result);
@@ -140,6 +145,7 @@ void MainWindow::on_pushButton_4_clicked()
 
 //    model->setTable("books");
 //    model->select();
+
     model->setQuery("SELECT * FROM books");
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
@@ -172,8 +178,8 @@ void MainWindow::on_pushButton_3_clicked()
     QSqlQuery query;
     query.exec(result);
     model->setQuery(query);
+    model->setQuery("SELECT * FROM books");
 
-//    model->select();
 
     model->setHeaderData(0, Qt::Horizontal, tr("Id"));
     model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -209,9 +215,10 @@ QString del="",result="";
 
    model->setQuery(query);
    model->submit();
-   model->setQuery("SELECT * FROM books");
 //   model->setTable("books");
 //   model->select();
+
+   model->setQuery("SELECT * FROM books");
 
    model->setHeaderData(0, Qt::Horizontal, tr("Id"));
    model->setHeaderData(1, Qt::Horizontal, tr("Title"));
@@ -220,4 +227,74 @@ QString del="",result="";
    model->setHeaderData(4, Qt::Horizontal, tr("Year"));
    model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
    this->ui->tableView->setModel(model);
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+QString result="SELECT * FROM books WHERE ";
+                result+="id LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%' OR title LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%' OR author LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%' OR genre LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%' OR year LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%' OR rating LIKE '%";
+               result+=ui->lineEdit_6->text();
+               result+="%'";
+
+QSqlQuery query;
+query.exec(result);
+model->setQuery(query);
+
+model->setHeaderData(0, Qt::Horizontal, tr("Id"));
+model->setHeaderData(1, Qt::Horizontal, tr("Title"));
+model->setHeaderData(2, Qt::Horizontal, tr("Author"));
+model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
+model->setHeaderData(4, Qt::Horizontal, tr("Year"));
+model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+
+
+this->ui->tableView->setModel(model);
+
+
+}
+
+void MainWindow::on_lineEdit_7_textChanged(QString res)
+{
+
+    if (ui->checkBox->checkState()==Qt::Checked)
+    {
+    QString result="SELECT * FROM books WHERE ";
+                    result+="id LIKE '%";
+                   result+=res;
+                   result+="%' OR title LIKE '%";
+                   result+=res;
+                   result+="%' OR author LIKE '%";
+                   result+=res;
+                   result+="%' OR genre LIKE '%";
+                   result+=res;
+                   result+="%' OR year LIKE '%";
+                   result+=res;
+                   result+="%' OR rating LIKE '%";
+                   result+=res;
+                   result+="%'";
+
+    QSqlQuery query;
+    query.exec(result);
+    model->setQuery(query);
+
+    model->setHeaderData(0, Qt::Horizontal, tr("Id"));
+    model->setHeaderData(1, Qt::Horizontal, tr("Title"));
+    model->setHeaderData(2, Qt::Horizontal, tr("Author"));
+    model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
+    model->setHeaderData(4, Qt::Horizontal, tr("Year"));
+    model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+
+
+    this->ui->tableView->setModel(model);
+}
 }

@@ -16,18 +16,23 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 private:
     Ui::MainWindow *ui;
     QSqlQueryModel *model;
 
 
 private slots:
+    void on_lineEdit_7_textChanged(QString );
+    void on_pushButton_5_clicked();
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
     void on_pushButton_clicked(bool checked);
     void on_pushButton_pressed();
     void on_pushButton_clicked();
+
+
 };
 
 #endif // MAINWINDOW_H
