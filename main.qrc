@@ -1,0 +1,22 @@
+<RCC>
+    
+<qresource prefix="/images">
+       
+ <file>star.png</file>
+      
+  <file>del.PNG</file>
+      
+  <file>find.PNG</file>
+      
+  <file>reset.jpeg</file>
+  
+      <file>smart.jpeg</file>
+    
+    <file>add.png</file>
+    
+    <file>COMPBOOK.gif</file>
+     
+   <file>main_icon.PNG</file>
+ 
+   </qresource>
+</RCC>

@@ -11,12 +11,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    delegat.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
     conn.h \
+    delegat.h\
     mainwindow.h
 
+RESOURCES   += main.qrc
 FORMS    += mainwindow.ui
 
 OTHER_FILES +=
