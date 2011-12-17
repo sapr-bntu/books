@@ -58,7 +58,9 @@
 static bool createConnection()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("asd.db");    
+    db.setDatabaseName("asd.db");
+
+
     if (!db.open()) {
         QMessageBox::critical(0, qApp->tr("Cannot open database"),
                               qApp->tr("Unable to establish a database connection.\n"
@@ -69,17 +71,26 @@ static bool createConnection()
         return false;
     }
 
-//    QSqlQuery query;
-//    //query.exec("create table books (id integer PRIMARY KEY,title varchar(20), author varchar(20),genre varchar(20),year int,rating int)");
-//    query.exec("create table books (title varchar(20), author varchar(20),genre varchar(20),year int,rating int)");
-//    query.exec("insert into books values('C#', 'Shildt', 'Programing',2004,5)");
-//    query.exec("insert into books values('C# and ASP', 'O Rielly', 'Programing',2006,4)");
-//    query.exec("insert into books values('Kolobok', 'Unknown', 'Tales',1991,2)");
-//    query.exec("insert into books values('Var and Peace', 'Tolstoy', 'Novel',1879,3)");
-//    query.exec("insert into books values('Kursovoe proektirovanie', 'Dunaev', 'Learning',1979,2)");
-//    query.exec("insert into books values('1000 Records', 'Unknown', 'Various',2000,5)");
 
-//    query.exec("insert into books values('C++', 'Shildt', 'Programing',2000,2)");
+
+    QSqlQuery query("select name from sqlite_master where type='table' and name='books'", db);
+    if (!query.first())
+    {
+        QSqlQuery query;
+        //query.exec("create table books (id integer PRIMARY KEY,title varchar(20), author varchar(20),genre varchar(20),year int,rating int)");
+        query.exec("create table books (title varchar(20), author varchar(20),genre varchar(20),year int,rating int)");
+        query.exec("insert into books values('C#', 'Shildt', 'Programing',2004,5)");
+        query.exec("insert into books values('C# and ASP', 'O Rielly', 'Programing',2006,4)");
+        query.exec("insert into books values('Kolobok', 'Unknown', 'Tales',1991,2)");
+        query.exec("insert into books values('Var and Peace', 'Tolstoy', 'Novel',1879,3)");
+        query.exec("insert into books values('Kursovoe proektirovanie', 'Dunaev', 'Learning',1979,2)");
+        query.exec("insert into books values('1000 Records', 'Unknown', 'Various',2000,5)");
+
+        query.exec("insert into books values('C++', 'Shildt', 'Programing',2000,2)");
+    }
+
+
+
 
     return true;
 }
