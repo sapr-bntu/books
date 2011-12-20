@@ -20,6 +20,9 @@ public:
 private:
     Ui::MainWindow *ui;
     QSqlQueryModel *model;
+    //!!!!!!!!
+  void loadTextFile();
+
 
 
 private slots:

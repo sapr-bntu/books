@@ -30,7 +30,7 @@
       <widget class="QWidget" name="page">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QTextBrowser" name="textBrowser"/>
+         <widget class="QTextEdit" name="textEdit"/>
         </item>
        </layout>
       </widget>
@@ -313,7 +313,7 @@
      <x>0</x>
      <y>0</y>
      <width>638</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

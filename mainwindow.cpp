@@ -12,14 +12,21 @@
 #include "delegat.h"
 //#include <QSqlTableModel>
 //#include <QSqlRelationalTableModel>
+#include <QtCore/QFile>
+ #include <QtCore/QTextStream>
+
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //loadTextFile();
     ui->stackedWidget->setCurrentIndex(1);
+
     createConnection();
+
+
     model= new QSqlQueryModel (this);
     //model->setTable("books");
    // model->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -34,9 +41,11 @@ MainWindow::MainWindow(QWidget *parent) :
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+    model->setHeaderData(6, Qt::Horizontal, tr("Text"));
 
 
     this->ui->tableView->setModel(model);
+
 
 }
 
@@ -50,9 +59,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+
 void MainWindow::on_pushButton_clicked()
 {
-    bool author=false,title=false,genre=false,rating=false,year=false,first=true;
+    bool author=false,title=false,genre=false,rating=false,year=false,first=true, texts=false;
     QString result="SELECT * FROM books WHERE ";
 
 
@@ -61,6 +72,7 @@ void MainWindow::on_pushButton_clicked()
     if ((this->ui->lineEdit_3->text())!="") genre=true;
     if ((this->ui->lineEdit_5->text())!="") rating=true;
     if ((this->ui->lineEdit_2->text())!="") year=true;
+    if ((this->ui->lineEdit_6->text())!="") texts=false;
 
     if (author)
     {
@@ -133,6 +145,7 @@ void MainWindow::on_pushButton_clicked()
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+    model->setHeaderData(6, Qt::Horizontal, tr("Text"));
 
 
     this->ui->tableView->setModel(model);
@@ -160,6 +173,7 @@ void MainWindow::on_pushButton_4_clicked()
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+    model->setHeaderData(6, Qt::Horizontal, tr("Text"));
 
 
     this->ui->tableView->setModel(model);
@@ -193,6 +207,7 @@ void MainWindow::on_pushButton_3_clicked()
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+    model->setHeaderData(6, Qt::Horizontal, tr("Text"));
     this->ui->tableView->setModel(model);
 }
 
@@ -232,6 +247,7 @@ QString del="",result="";
    model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
    model->setHeaderData(4, Qt::Horizontal, tr("Year"));
    model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+   model->setHeaderData(6, Qt::Horizontal, tr("Text"));
    this->ui->tableView->setModel(model);
 }
 
@@ -262,6 +278,7 @@ model->setHeaderData(2, Qt::Horizontal, tr("Author"));
 model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
 model->setHeaderData(4, Qt::Horizontal, tr("Year"));
 model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+model->setHeaderData(6, Qt::Horizontal, tr("Text"));
 
 
 this->ui->tableView->setModel(model);
@@ -299,6 +316,7 @@ void MainWindow::on_lineEdit_7_textChanged(QString res)
     model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
     model->setHeaderData(4, Qt::Horizontal, tr("Year"));
     model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+    model->setHeaderData(6, Qt::Horizontal, tr("Text"));
 
 
     this->ui->tableView->setModel(model);
@@ -308,4 +326,21 @@ void MainWindow::on_lineEdit_7_textChanged(QString res)
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
     ui->stackedWidget->setCurrentIndex(0);
+
+    //!!!!!!
+//   QFile inputFile("C:/in.txt");
+//    inputFile.open(QIODevice::ReadOnly);
+
+//    QTextStream in(&inputFile);
+   QString line;// = in.readAll();
+//    inputFile.close();
+//    ui->textEdit->
+
+
+    int row=index.row();
+    line = model->record(row).value("Text").toString();
+    ui->textEdit->setPlainText(line);
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor, 1);
+
 }

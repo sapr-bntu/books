@@ -45,6 +45,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QtCore/QFile>
 
 /*
     This file defines a helper function to open a connection to an
@@ -57,17 +58,34 @@
 //! [0]
 static bool createConnection()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("asd.db");    
-    if (!db.open()) {
-        QMessageBox::critical(0, qApp->tr("Cannot open database"),
-                              qApp->tr("Unable to establish a database connection.\n"
-                                       "This example needs SQLite support. Please read "
-                                       "the Qt SQL driver documentation for information how "
-                                       "to build it.\n\n"
-                                       "Click Cancel to exit."), QMessageBox::Cancel);
-        return false;
+    QFile::exists("asd.db");
+
+    if (!(QFile::exists("asd.db")))
+    {
+        qDebug()<<"no";
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName("dsa.db");
+        db.open();
+        QSqlQuery query;
+        query.exec("CREATE TABLE [books] ([id] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,[title] varchar(20)  NULL,[author] varchar(20)  NULL,[genre] varchar(20)  NULL,[year] int  NULL,[rating] int  NULL,[text] VARCHAR(10000)  NULL)");
+        query.first();
+     }
+    else
+    {
+        qDebug()<<"yes";
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName("asd.db");
+        db.open();
     }
+    //if (!db.open()) {
+        //QMessageBox::critical(0, qApp->tr("Cannot open database"),
+                            //  qApp->tr("Unable to establish a database connection.\n"
+                                  //     "This example needs SQLite support. Please read "
+                                    //   "the Qt SQL driver documentation for information how "
+                                    //   "to build it.\n\n"
+                                   //    "Click Cancel to exit."), QMessageBox::Cancel);
+      //  return false;
+   // }
 
 //    QSqlQuery query;
 //    //query.exec("create table books (id integer PRIMARY KEY,title varchar(20), author varchar(20),genre varchar(20),year int,rating int)");
