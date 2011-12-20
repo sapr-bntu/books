@@ -19,21 +19,18 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QSqlQueryModel *model;
+    QSqlTableModel *model;
 
 
 private slots:
+    void on_tableView_doubleClicked(QModelIndex index);
     void on_lineEdit_7_textChanged(QString );
     void on_pushButton_5_clicked();
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
-    void on_pushButton_clicked(bool checked);
-    void on_pushButton_pressed();
     void on_pushButton_clicked();
 
-
-    void on_tableView_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H
