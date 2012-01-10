@@ -22,10 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(1);
     createConnection();
     model= new QSqlTableModel (this);
-    model->setTable("books");
-    model->setEditStrategy(QSqlTableModel::OnRowChange);
-    model->select();
-//    model->setQuery("SELECT * FROM books");
+//    model->setTable("books");
+//    model->setEditStrategy(QSqlTableModel::OnRowChange);
+//    model->select();
+    model->setQuery("SELECT * FROM books");
     ui->tableView->setItemDelegate(new delegat(ui->tableView));
 
 
@@ -121,7 +121,7 @@ void MainWindow::on_pushButton_clicked()
    // model->setTable("books");
    // model->setEditStrategy(QSqlTableModel::OnManualSubmit);
    // model->select();
-   //model->setQuery("SELECT * FROM books");
+   model->setQuery("SELECT * FROM books");
 
     QSqlQuery query;
     query.exec(result);
@@ -206,17 +206,14 @@ void MainWindow::on_pushButton_2_clicked()
 {
 QString del="",result="";
 
-//   del+=model->data(ui->tableView->selectionModel()->currentIndex()).toString();
-   int row = ui->tableView->selectionModel()->currentIndex().row();
-   model->removeRow(row);
-   model->submit();
-//    result+="delete from books where id="+del;
-//   QSqlQuery query;
-//   query.exec(result);
+   del+=model->data(ui->tableView->selectionModel()->currentIndex()).toString();
+    result+="delete from books where id="+del;
+   QSqlQuery query;
+   query.exec(result);
 
-//   model->setQuery(query);
-//   model->submit();
-//   model->setQuery("SELECT * FROM books");
+   model->setQuery(query);
+   model->submit();
+   model->setQuery("SELECT * FROM books");
 //   model->setTable("books");
 //   model->select();
 
@@ -227,13 +224,13 @@ QString del="",result="";
 
 
 
-//   model->setHeaderData(0, Qt::Horizontal, tr("Id"));
-//   model->setHeaderData(1, Qt::Horizontal, tr("Title"));
-//   model->setHeaderData(2, Qt::Horizontal, tr("Author"));
-//   model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
-//   model->setHeaderData(4, Qt::Horizontal, tr("Year"));
-//   model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
-//   this->ui->tableView->setModel(model);
+   model->setHeaderData(0, Qt::Horizontal, tr("Id"));
+   model->setHeaderData(1, Qt::Horizontal, tr("Title"));
+   model->setHeaderData(2, Qt::Horizontal, tr("Author"));
+   model->setHeaderData(3, Qt::Horizontal, tr("Genre"));
+   model->setHeaderData(4, Qt::Horizontal, tr("Year"));
+   model->setHeaderData(5, Qt::Horizontal, tr("Rating"));
+   this->ui->tableView->setModel(model);
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -309,4 +306,19 @@ void MainWindow::on_lineEdit_7_textChanged(QString res)
 void MainWindow::on_tableView_doubleClicked(QModelIndex index)
 {
      ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_tableView_clicked(const QModelIndex &index)
+{
+//    QSqlQuery query;
+//    query.prepare("Select view from books where id=?");
+//    query.addBindValue(model->);
+    QByteArray ba;
+    QPixmap pixmap;
+//    query.exec();
+//    ba= query.value(0).toByteArray();
+    ba = model->record(index.row()).value("view").toByteArray();
+    qDebug()<<"view: "<<ba.size();
+    pixmap.loadFromData(ba);
+    ui->label_6->setPixmap(pixmap);
 }

@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QSqlTableModel *model;
+    QSqlQueryModel *model;
 
 
 private slots:
@@ -31,6 +31,7 @@ private slots:
     void on_pushButton_4_clicked();
     void on_pushButton_clicked();
 
+    void on_tableView_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H
